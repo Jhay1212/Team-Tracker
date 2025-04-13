@@ -20,6 +20,7 @@ const Home = () => {
       };
 
   }, [employee]);
+  console.log(employee)
   // console.log(employee['results']);
   return (
 
@@ -44,8 +45,9 @@ const Home = () => {
     <EmployeeCard
       key={index}
       name={emp.name}
-      email={emp.pemail}
+      email={emp.email}
       phone={emp.phone}
+      position={emp.position}
       department={emp.department}
     />
   ))

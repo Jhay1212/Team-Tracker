@@ -16,12 +16,18 @@ const EmployeeCard = (props) => {
     <p className="text-gray-700 text-base mb-2">
       Department: <span className="font-medium">{props.department}</span>
     </p>
-    <p className="text-gray-600 text-sm mb-1">
-      Email: <span className="font-medium">{props.email}</span>
+
+    <p className='text-gray-600 text-sm'>
+      <span className='font-bold '>Department: </span>{props.department}
     </p>
-    <p className="text-gray-600 text-sm">
-      Phone: <span className="text-blue-500 font-medium">{props.phone}</span>
+<p className='text-gray-600 text-sm'>
+      <span className='font-bold '>Position: </span>{props.position}
     </p>
+    <p className='text-gray-600 text-sm'>
+      Workin in project: 'sasa'
+      
+    </p>
+    <small>Start time: {new Date()}</small>
   </div>
 </div>
 

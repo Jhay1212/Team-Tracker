@@ -1,6 +1,6 @@
 from rest_framework import serializers, viewsets, routers
 from .models import Employee, Team
-
+from projects.models import Project
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee

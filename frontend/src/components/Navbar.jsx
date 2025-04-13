@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../assets/react.svg'
-
+import { Link } from 'react-router-dom'
 const Navbar = () => {
   return (
     <header className='min-w-full flex flex-wrap justify-around items-center bg-blue-950 py-2 sticky'>
@@ -12,9 +12,9 @@ const Navbar = () => {
 
 
 <ul className='flex justify-between'>
-  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '>Home</li>
-  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '>About</li>
-  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '>Contact</li>
+  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/'}>Home</Link></li>
+  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/tasks'}>Tasks</Link></li>
+  <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/dashboard'}>Dashboard</Link></li>
 </ul>
       </nav>
 

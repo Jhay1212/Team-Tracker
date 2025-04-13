@@ -64,85 +64,61 @@ const CreateModal = () => {
 
   return (
 
-    <div className='card modal rounded-[10px] m-2 bg-transparent p-4 w-1/2' >
+    <div className='card modal rounded-[10px] m-2 bg-transparent p-4 w-1/2 h-100' >
 
             <legend className='text-2xl'>Create Employee</legend>
 
-            <div className='border border-black  bg-amber-200 mt-1 p-4'>
+            <div className='border border-black  bg-amber-200 mt-1 p-4 rounded-md' >
                 <form className='flex flex-col gap-2 flex-wrap' onSubmit={handdleSubmit} method='post'>
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="name">Name</label>
+                    <div className='flex justify-between gap-4'>
+                        
                         <input
+                        placeholder='Name'
+                        
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none' type="text" name="name" id="name" />
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="email">Email</label>
+                        className='py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none
+                        ' type="text" name="name" id="name" />
+
                         <input
+                        placeholder='Email'
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none' type="email" name="email" id="email" />
+                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 
+                        border-b-2 appearance-none' type="email" name="email" id="email" />
                     </div>
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="genderl">Gender</label>
+                    <div className='flex justify-evenly my-5 `gap-2'>
                         <input
+                        placeholder='Gender'
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none' type="email" name="gender" id="gender" />
-                    </div>
-                    <div className='flex flex-col gap-2'>    
-                        <label htmlFor="phone">Phone</label>
+                        className='py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 
+                        appearance-none' type="email" name="gender" id="gender" />
                         <input
+                        placeholder='Phone Number'
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none' type="text" name="phone" id="phone" />
+                        className=' py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 
+                        appearance-none' type="text" name="phone" id="phone" />
                     </div>
+                  
                  
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="department">Department</label>
+                    <div className='flex justify-between gap-2'>
                         <input
+                        placeholder='Department'
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0  border-b-2 appearance-none' type="text" name="department" id="department" />
-                    </div>
-                    <div className='flex flex-col gap-2 mb-4'>  
-                        <label htmlFor='position'>position</label>
-                        <input 
+                        className='block py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0  border-b-2 
+                        appearance-none' type="text" name="department" id="department" />
+                          <input 
+                        placeholder='Position'
                         onChange={handleChange}
-                        className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none' type="text" name="position" id="position" />
+                        className= 'py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 appearance-none'
+                         type="text" name="position" id="position" />
                     </div>
+                  
                     <div className='flex flex-col gap-2 mb-4'>  
                         <label htmlFor='team'>Team</label>
-                       <button
-  id="dropDownDefaultButton"
-  data-dropdown-toggle="dropdown"
-  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-             focus:outline-none focus:ring-blue-300 font-medium 
-             rounded-lg text-sm px-5 py-2.5 text-center inline-flex 
-             items-center dark:bg-blue-600 dark:hover:bg-blue-700 
-             dark:focus:ring-blue-800"
-  type="button"
->
-  <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-  </svg>
-  <span className="text-sm px-2">Select Team</span>
-</button>
-
-<div
-  id="dropdown"
-  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
->
-  <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropDownDefaultButton">
-    <li>sadasd</li>
-    {teams.map((team) => (
-      <li key={team.id}>
-        <a
-          href="#"
-          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-        >
-          {team.name}
-        </a>
-      </li>
-    ))}
-  </ul>
-</div>
+                        <select id="team" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          {teams.map((team, index) => (
+                              <option key={team.id} value={team.name}>{team.name}</option>
+                          ))}
+                        </select>
 
                     </div>
                     </form>
