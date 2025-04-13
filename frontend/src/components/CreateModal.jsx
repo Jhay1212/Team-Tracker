@@ -85,7 +85,7 @@ const CreateModal = () => {
                         className='block py-2.5 px-0 w-full text-sm text-gray bg-transparent boder-0 
                         border-b-2 appearance-none' type="email" name="email" id="email" />
                     </div>
-                    <div className='flex justify-evenly my-5 `gap-2'>
+                    <div className='flex between my-5 gap-2'>
                         <input
                         placeholder='Gender'
                         onChange={handleChange}

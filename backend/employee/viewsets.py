@@ -1,14 +1,24 @@
 from rest_framework import serializers, viewsets, routers, generics
 from .models import Employee, Team
+from rest_framework .authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .serializers import EmployeeSerializer, TeamSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    token = TokenAuthentication()
+    def get_queryset(self):
+        queryset = Employee.objects.all()
+        team_id = self.request.query_params.get('team_id', None)
+        if team_id is not None:
+            queryset = Employee.objects.filter(team_id=team_id)
+        return queryset
 
     def create(self, request, *args, **kwargs):
         print(request.data)
+        # if request.data
         # employee = Employee.objects.create(employee_name=request.data['name'], team_id=request.data['team_id'])
         return super().create(request, *args, **kwargs)
 

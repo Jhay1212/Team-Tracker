@@ -33,9 +33,19 @@ const Home = () => {
     <div className='min-h-full'>
 
     <Navbar />
-      <div id='menu' className='container px-3 py-5  mx-auto flex justify-between bg-white mt-5 '>
+    
+      
+      
+      <div id='menu' className='container px-3 py-4  mx-auto flex justify-between bg-white mt-5 rounded-sm'>
 
+
+<div className='flex justify-center items-center gap-4'> 
+
+      <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
       <input type='search'  placeholder='Search'/>
+</div>
       <div>
         <div className='flex justify-center items-center gap-4 uppercase text-sm text-center'>
 
@@ -44,6 +54,10 @@ const Home = () => {
           </div>
       </div>
       </div>
+
+
+      
+
     
       <main className=" border border-red-100 h-full ">
         <div className="flex justify-center mx-auto w-full">
@@ -54,7 +68,7 @@ const Home = () => {
 
       <div className='flex wrapper items-center justify-center w-full'>
 
-        <div className="flex justify-evenly flex-wrap place-items-center  w-full">
+        <div className="grid   grid-cols-3 mx-auto w-3/4">
 
         
 {employee && employee.length > 0 ? (

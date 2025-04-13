@@ -8,6 +8,7 @@ class Employee(models.Model):
     gender = models.CharField(max_length=10)
     department = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
+    password = models.CharField(max_length=100, default='admin', blank=True)
 
     def __str__(self):
         return self.name
