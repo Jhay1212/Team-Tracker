@@ -21,12 +21,29 @@ const Home = () => {
 
   }, [employee]);
   console.log(employee)
+
+  const showCreateModal = () => {
+    const modal = document.getElementById('createModal');
+    modal.style.display = 'block';
+  }
   // console.log(employee['results']);
   return (
 
 
     <div className='min-h-full'>
+
     <Navbar />
+      <div id='menu' className='container px-3 py-5  mx-auto flex justify-between bg-white mt-5 '>
+
+      <input type='search'  placeholder='Search'/>
+      <div>
+        <div className='flex justify-center items-center gap-4 uppercase text-sm text-center'>
+
+      <h1 onClick={showCreateModal}>Add a new employee</h1>
+      <h1>Modify an employee</h1>
+          </div>
+      </div>
+      </div>
     
       <main className=" border border-red-100 h-full ">
         <div className="flex justify-center mx-auto w-full">

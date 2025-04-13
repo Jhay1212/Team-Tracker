@@ -1,5 +1,6 @@
 body {
   height: 100vh;
+  background: rgb(113, 126, 195);
 }html, body, #root {
   height: 100%;
 }

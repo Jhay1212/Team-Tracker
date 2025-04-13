@@ -64,7 +64,7 @@ const CreateModal = () => {
 
   return (
 
-    <div className='card modal rounded-[10px] m-2 bg-transparent p-4 w-1/2 h-100' >
+    <div className='card modal rounded-[10px] m-2 bg-transparent p-4 w-1/2 h-100 hidden' id='createModal' >
 
             <legend className='text-2xl'>Create Employee</legend>
 

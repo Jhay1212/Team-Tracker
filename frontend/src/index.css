@@ -7,7 +7,8 @@ html, body, #root {
   }
 
   body {
-    background-color: #252424;
+  background: rgb(45, 147, 108);
+
   }
   
   #root > * {
