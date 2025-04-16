@@ -2,21 +2,39 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {motion} from 'framer-motion'
-
+import hidden from '../assets/hidden.png'
+import eye from '../assets/eye.png'
 
 
 const CreateModal = () => {
+
+    const [passwordVisibility, setPasswordVisibility] = useState(false);
 
     const [teams, setTeams] = useState([])
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        password: '',
         phone: '',
         department: '',
         team: ''
     });
-
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/teams/');
+                // alert('fetched');
+                setTeams(response.data.results);
+                // console.log(response.data.results);
+            } catch (error) {
+                console.log('error', error.message);
+            }
+        };
     
+        fetchData()
+    }, []);
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +43,7 @@ const CreateModal = () => {
           [name]: value,
         }));
       };
+
     const handdleSubmit = async (e) => {
         e.preventDefault();
 
@@ -45,20 +64,11 @@ const CreateModal = () => {
          }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/api/teams/');
-                // alert('fetched');
-                setTeams(response.data.results);
-                // console.log(response.data.results);
-            } catch (error) {
-                console.log('error', error.message);
-            }
-        };
-    
-        fetchData()
-    }, []);
+    const toggleVisibility = (e) => {
+        e.preventDefault();
+        setPasswordVisibility((prev) => !prev);
+    }
+
 
     // console.log(teams)
 
@@ -87,10 +97,27 @@ const CreateModal = () => {
                     </div>
                     <div className='flex between my-5 gap-2'>
                         <input
+                        name='password'
+                        type={passwordVisibility ? 'text' : 'password'}
+                        id='password'
+                        placeholder='Password'
+
+                        onChange={handleChange}
+                        className='py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 
+                        appearance-none'/>
+                        <img 
+                        src={passwordVisibility ? eye : hidden}
+
+                                                alt='' className='w-10 h-10 rounded-full'
+                                                 id='eyeIcon' onClick={toggleVisibility} />
+                        
+                        </div>
+                    <div className='flex between my-5 gap-2'>
+                        <input
                         placeholder='Gender'
                         onChange={handleChange}
                         className='py-2.5 px-2 w-full text-sm text-gray bg-transparent boder-0 border-b-2 
-                        appearance-none' type="email" name="gender" id="gender" />
+                        appearance-none' type="text" name="gender" id="gender" />
                         <input
                         placeholder='Phone Number'
                         onChange={handleChange}

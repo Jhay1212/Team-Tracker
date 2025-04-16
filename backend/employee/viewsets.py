@@ -3,7 +3,7 @@ from .models import Employee, Team
 from rest_framework .authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .serializers import EmployeeSerializer, TeamSerializer
-
+import bcrypt 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
@@ -18,8 +18,9 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         print(request.data)
-        # if request.data
-        # employee = Employee.objects.create(employee_name=request.data['name'], team_id=request.data['team_id'])
+        password = bcrypt.hashpw(request.data['password'].encode('utf-8'), bcrypt.gensalt())
+        request.data['password'] = password
+
         return super().create(request, *args, **kwargs)
 
 
@@ -35,10 +36,6 @@ class TeamViewSet(viewsets.ModelViewSet):
         if team_id is not None:
             queryset = Team.objects.filter(id=team_id)
         return queryset
-
-    def create(self, request, *args, **kwargs):
-        team = Team.objects.create(team_name=request.data['team_name'])
-        return team
 
 
 

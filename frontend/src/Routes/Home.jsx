@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import EmployeeCard from '../components/EmployeeCard';
 import Navbar from '../components/Navbar';
 import CreateModal from '../components/CreateModal';
+import TableData from '../components/TableData';
 import axios from 'axios';
 
 const Home = () => {
@@ -20,13 +21,12 @@ const Home = () => {
       };
 
   }, [employee]);
-  console.log(employee)
 
   const showCreateModal = () => {
     const modal = document.getElementById('createModal');
     modal.style.display = 'block';
   }
-  // console.log(employee['results']);
+  console.log(employee);
   return (
 
 
@@ -61,6 +61,8 @@ const Home = () => {
     
       <main className=" border border-red-100 h-full ">
         <div className="flex justify-center mx-auto w-full">
+      <TableData data={employee}/>
+
 
     <CreateModal />
         </div>
