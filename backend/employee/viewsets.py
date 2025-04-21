@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import EmployeeSerializer, TeamSerializer, ProjectSerializer, UserSerializer
 import bcrypt 
+from django.contrib.auth.models import User 
 
 from .models import Employee, Team
 from projects.models import Project
@@ -15,19 +16,19 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     token = TokenAuthentication()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
-    def retrieve(self, request, *args, **kwargs):
-        queryset = Employee.objects.all()
+    # def retrieve(self, request, *args, **kwargs):
+    #     queryset = Employee.objects.all()
 
-        user = get_object_or_404(queryset, pk=kwargs['name'])
-        serializer = self.get_serializer(user)
-        return Response(serializer.data)
-    def get_permissions(self):
-        self.permission_classes = [AllowAny]
-        if self.request.method == 'POST':
-            self.permission_classes = [IsAdminUser]
+    #     user = get_object_or_404(queryset, pk=kwargs['name'])
+    #     serializer = self.get_serializer(user)
+        # return Response(serializer.data)
+    # def get_permissions(self):
+        # self.permission_classes = [AllowAny]
+        # if self.request.method == 'POST':
+            # self.permission_classes = [IsAdminUser]
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -71,14 +72,27 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data.copy()
-        print(request.data)
-        password = bcrypt.hashpw(request.data['password'].encode('utf-8'), bcrypt.gensalt())
-        data['password'] = password 
-        request._full_data = data
-        return super().create(request, *args, **kwargs)
+        if 'password' in data:
+            data['password'] = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=201)
 
 
+class LoginView(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    fields = ['username', 'password']
 
+    def create(self, request, *args, **kwargs):
+        """
+        Handles POST request to login endpoint.
+        The request body should contain a username and password.
+        The response will contain a JSON Web Token which can be used to authenticate the user in subsequent requests.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)  
+        return Response(serializer.data)  
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
@@ -105,12 +119,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = Employee.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    
     
 
-    def create(self, request, *args, **kwargs):
-        token = TokenAuthentication(user=request.user)
+    
     def get_queryset(self):
         queryset = Employee.objects.all()
         employee_id = self.request.query_params.get('employee_id', None)
@@ -118,10 +133,10 @@ class UserViewSet(viewsets.ModelViewSet):
             queryset = Employee.objects.filter(id=employee_id)
         return queryset
 
-class LoginView(generics.CreateAPIView):
-    serializer_class = UserSerializer
 
 router = routers.DefaultRouter()
 router.register(r'employees', EmployeeViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'teams', TeamViewSet)
+# router.register(r'users', UserViewSet)
+# router.register(r'login', LoginView)

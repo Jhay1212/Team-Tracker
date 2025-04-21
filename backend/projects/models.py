@@ -21,7 +21,11 @@ class Project(models.Model):
     @property
     def calculated_time(self):
         return self.task_date_completed - self.created_at
+
+    @property 
+    def get_project_by_user(self):
+        return Project.objects.filter(employee=self.employee).filter(created_at__gt=self.created_at)
     
-    
+
     def __str__(self):
         return self.name + " " + self.description + " " + self.status if self.status and self.description else self.status

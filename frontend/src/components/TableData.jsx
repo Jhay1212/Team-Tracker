@@ -17,22 +17,22 @@ const TableData = (props) => {
 
     // console.log(`Table data $`);
   return (
-    <div classname='container p-2 font-bolder'>
-        <table className="table table-striped table-hover table-bordered w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div className='container p-2 font-bolder'>
+        <table className="table table-striped table-hover table-bordered w-full text-sm text-left rtl:text-right font-extrabold py-5 px-2 dark:text-gray-400">
                 <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Department</th>
-                        <th scope="col">Team</th>
-                        <th scope="col">Position</th>
+                    <tr className='py-5 bg-white font-extrabold text-black'>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Name</th>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Email</th>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Phone</th>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Department</th>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Team</th>
+                        <th scope="col" className='py-5 font-extrabold px-2'>Position</th>
                         <th scope='col'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.data.map((item) => (
-                        <tr key={item.id}>
+                        <tr key={item.id} className='[&>*]:bg-white'>
                             <td>{item.name}</td>
                             <td>{item.email}</td>
                             <td>{item.phone}</td>
