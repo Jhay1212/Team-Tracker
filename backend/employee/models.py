@@ -5,7 +5,6 @@ class Employee(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
-
     position = models.CharField(max_length=100)
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     password = models.CharField(max_length=100, blank=True)

@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers, viewsets, routers, generics
 from rest_framework .authentication import TokenAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import EmployeeSerializer, TeamSerializer, ProjectSerializer, UserSerializer
@@ -10,7 +12,50 @@ from django.contrib.auth.models import User
 
 from .models import Employee, Team
 from projects.models import Project
+from django.contrib.auth import authenticate
 
+class AuthViewSet(viewsets.ViewSet):
+    queryset = User.objects.none()
+    serializers = UserSerializer
+    @action (detail=False, methods=['post'], url_path='login')
+    def login(self, request, *args, **kwargs):
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
+
+        if not username:
+            return Response({'error': 'Please provide username.'}, status=400)
+
+        user = User.objects.get(username=username)
+
+    
+        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username,
+            })
+        else:
+            return Response({'error': 'Invalid username or passwordl.'}, status=401)
+        
+
+    def logout(self, request, *args, **kwargs):
+        request.user.auth_token.delete()
+        return Response({'message': 'Logged out successfully.'})
+       
+    @action(detail=False, methods=['post'], url_path='register')
+    def signup(self, request, *args, **kwargs):
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
+        password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+        # if User.objects.get(username=username):
+        #     return Response({'message': 'User already exists.'}, status=400)
+        
+        user = User.objects.create(username=username, password=password)
+        user.save()
+        return Response({'message': 'User created successfully.'}, status=201)
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
@@ -80,19 +125,6 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=201)
 
 
-class LoginView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-    fields = ['username', 'password']
-
-    def create(self, request, *args, **kwargs):
-        """
-        Handles POST request to login endpoint.
-        The request body should contain a username and password.
-        The response will contain a JSON Web Token which can be used to authenticate the user in subsequent requests.
-        """
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)  
-        return Response(serializer.data)  
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
@@ -137,6 +169,6 @@ class UserViewSet(viewsets.ModelViewSet):
 router = routers.DefaultRouter()
 router.register(r'employees', EmployeeViewSet)
 router.register(r'projects', ProjectViewSet)
-router.register(r'teams', TeamViewSet)
 # router.register(r'users', UserViewSet)
-# router.register(r'login', LoginView)
+router.register(r'teams', TeamViewSet)
+router.register(r'auth', AuthViewSet)
