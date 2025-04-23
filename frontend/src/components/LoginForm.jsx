@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 const LoginForm = () => {
   const [user, setUser] = useState({
-    email: '',
+    username: '',
     password: ''
   });
 
@@ -20,12 +20,12 @@ const handleSubmit = async (e) => {
     const updatedUser = {...user };
     try {
       await axios.post('http://localhost:8000/api/login/', updatedUser);
-      alert('Success');
+      alert('Login Successfully');
     }catch(err) {
       console.log(err);
+      alert(err)
     }
 }
-  useEffect
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
@@ -34,12 +34,12 @@ const handleSubmit = async (e) => {
       <form className="space-y-5" onSubmit={handleSubmit}>
         
         <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+          <label className="block mb-1 text-sm font-medium text-gray-700">Username</label>
           <input
-            type="email"
-            value={user.email}
+            type="text"
+            value={user.username}
             onChange={handleChange}
-            placeholder="Enter your email"
+            placeholder="Username"
             className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           />
         </div>

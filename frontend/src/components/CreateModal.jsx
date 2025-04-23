@@ -13,9 +13,7 @@ const CreateModal = () => {
     email: '',
     password: '',
     phone: '',
-    department: '',
     team: '',
-    gender: '',
     position: ''
   });
 
@@ -117,15 +115,7 @@ const CreateModal = () => {
           </div>
 
           <div className='flex between my-5 gap-2'>
-            <input
-              placeholder='Gender'
-              name='gender'
-              value={formData.gender}
-              onChange={handleChange}
-              className='py-2.5 px-2 md:w-1/2 w-full text-sm text-gray bg-transparent border-b-2 appearance-none'
-              type="text"
-              id="gender"
-            />
+
             <input
               placeholder='Phone Number'
               name='phone'
@@ -138,15 +128,7 @@ const CreateModal = () => {
           </div>
 
           <div className='flex justify-between gap-2'>
-            <input
-              placeholder='Department'
-              name='department'
-              value={formData.department}
-              onChange={handleChange}
-              className='py-2.5 px-2 w-full text-sm text-gray bg-transparent border-b-2 appearance-none'
-              type="text"
-              id="department"
-            />
+
             <input
               placeholder='Position'
               name='position'

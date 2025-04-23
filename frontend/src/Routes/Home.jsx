@@ -9,7 +9,23 @@ import ModifyEmployee from '../components/ModifyEmployee';
 import { Link } from 'react-router';
 
 const Home = () => {
+  let running = false;
   const [employee, setEmployee] = useState([]);
+  const [projects, setProjects] = useState([]);
+
+
+  useEffect(() => {
+    try {
+        (async function (){
+          const response = await axios.get(`http://localhost:8000/api/projects/`)
+          setProjects(response.data.results);
+          
+        })();
+        
+      }catch(error){
+          console.log('error', error.message);
+        }  
+      }, [projects]);
 
   useEffect(() => {
       try {
@@ -28,7 +44,17 @@ const Home = () => {
     const modal = document.getElementById('createModal');
     modal.style.display = 'block';
   }
-  const emps = 0;
+const startTimer = () => {
+  let time = 0;
+  running != running;
+  
+  while (running) {
+    setTimeout(() => {
+      time++;
+      console.log(time);
+    }, 1000);
+  }
+}
 
   const showModifyModal = (e) => {
     const empcard = e.target;
@@ -48,7 +74,24 @@ const Home = () => {
 
     
     <div id='menu'>
-    
+
+      <div className="card  bg-amber-300 rounded-lg text-center border border-double">
+        <div className="card-body">
+          <button onClick={startTimer}
+               type='button' 
+              className="card-title text-2xl font-bold text-indigo-600 uppercase">
+              Start project
+          </button>
+      </div>
+      </div>
+      <select className='bg-teal-200 rounded-md p-3  font-bolder none' onClick={startTimer}>
+        <option value='Select a Project'>Select a Project</option>
+        {
+          projects.map((project) => (
+            <option value={project.name} key={project.id}>{project.name}</option>
+          ))
+        }
+        </select> 
     </div>
     
       

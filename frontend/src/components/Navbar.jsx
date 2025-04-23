@@ -24,7 +24,7 @@ const Navbar = () => {
         
         <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/'}>Home</Link></li>
         {/* <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/tasks'}>Tasks</Link></li> */}
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/login'}>Dashboard</Link></li>
+        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/dashboard'}>Dashboard</Link></li>
 </ul>
      
 
