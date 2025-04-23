@@ -47,13 +47,14 @@ class AuthViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'], url_path='register')
     def signup(self, request, *args, **kwargs):
         username = request.data.get('username', None)
+        email = request.data.get('email', None)
         password = request.data.get('password', None)
         password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         # if User.objects.get(username=username):
         #     return Response({'message': 'User already exists.'}, status=400)
         
-        user = User.objects.create(username=username, password=password)
+        user = User.objects.create(username=username , email=email, password=password)
         user.save()
         return Response({'message': 'User created successfully.'}, status=201)
 

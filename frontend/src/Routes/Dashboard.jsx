@@ -27,13 +27,13 @@ const Dashboard = () => {
   ]  
   return (
     <>
-    <div className='min-h-screen h-full '>
+    <div className='h-20 '>
         <Navbar />
         {/* on dashboard this will have table that will show all the employees and their task for the day and 
         seperate table for project details on the same day */}
     </div>
 
-<main>
+<main className='h-screen w-screen'>
   <section id="projectContainer" className='bg white w-full mx-auto border border-double border-white rounded-md'>
 
 

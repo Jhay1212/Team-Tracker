@@ -7,7 +7,7 @@ import Home from './Routes/Home.jsx';
 import Employee from './components/Employee.jsx';
 import Dashboard from './Routes/Dashboard.jsx';
 import Login from './Routes/Login.jsx';
-
+import Register from './Routes/Register.jsx';
 const router = createBrowserRouter([
  {
   path: "/",
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
   path: "/login",
   element: <Login />,
  },
+ {
+  path: '/signup',
+  element: <Register/>  
+ }
  
 ])
 

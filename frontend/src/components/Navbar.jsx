@@ -30,8 +30,7 @@ const Navbar = () => {
 
      <ul className='flex justify-between items-center' >
         <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/login'}>Login</Link></li>
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/register'}>Register</Link></li>
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/'}>Logout</Link></li>
+        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/signup'}>Register</Link></li>
      </ul>
   </nav>
 

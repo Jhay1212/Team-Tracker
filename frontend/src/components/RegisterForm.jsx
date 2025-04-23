@@ -1,32 +1,31 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-const LoginForm = () => {
-  const [user, setUser] = useState({
-    username: '',
-    password: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    const updatedUser = {...user };
-    try {
-      await axios.post('http://localhost:8000/api/login/', updatedUser);
-      alert('Login Successfully');
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    }catch(err) {
-      console.log(err);
-      alert(err)
+import { Link } from 'react-router'
+const RegisterForm = () => {
+    const [user, setUser] = useState({
+      username: '',
+      password: ''
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setUser((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const updatedUser = {...user };
+      try {
+        await axios.post('http://localhost:8000/api/register/', updatedUser);
+        alert('Registration Successfully');
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      }catch(err) {
+        console.log(err);
+        alert(err)
+      }
     }
-}
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
@@ -64,7 +63,7 @@ const handleSubmit = async (e) => {
         </button>
 
         <div className="text-center mt-4 text-sm text-gray-500">
-          Don't have an account? <a href="#" className="text-indigo-600 hover:underline">Sign up</a>
+          Have an account? <Link to="/login" className="text-indigo-600 hover:underline">Sign up</Link>
         </div>
       </form>
     </div>
@@ -72,4 +71,4 @@ const handleSubmit = async (e) => {
   )
 }
 
-export default LoginForm
+export default RegisterForm
