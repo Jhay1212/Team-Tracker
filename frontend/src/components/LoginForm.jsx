@@ -19,12 +19,14 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedUser = {...user };
     try {
-      await axios.post('http://localhost:8000/api/login/', updatedUser);
+      await axios.post('http://localhost:8000/api/auth/login/', updatedUser);
       alert('Login Successfully');
       localStorage.setItem('user', JSON.stringify(updatedUser));
+      
+      return window.location.href = '/';
     }catch(err) {
       console.log(err);
-      alert(err)
+      alert(err.message )
     }
 }
   return (
@@ -39,6 +41,7 @@ const handleSubmit = async (e) => {
           <input
             type="text"
             value={user.username}
+            name='username'
             onChange={handleChange}
             placeholder="Username"
             className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
@@ -50,6 +53,7 @@ const handleSubmit = async (e) => {
           <input
           value={user.password}
             type="password"
+            name='password'
             onChange={handleChange}
             placeholder="Enter your password"
             className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"

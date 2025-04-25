@@ -66,53 +66,18 @@ const Home = () => {
     if (modal) modal.style.display = 'block'; // Ideally use useRef or state
   };
 
+  console.log(employees);
   return (
     <div className="min-h-full">
       <div className="w-full md:w-screen bg-[#0C1B33]">
         <Navbar />
       </div>
 
-      <div id="menu">
-        <div id="btnContainer" className="flex justify-start ml-20 sm:ml-10">
-          <button
-            onClick={handleStartProject}
-            className="card-title text-2xl font-bold text-indigo-600 uppercase bg-amber-300 p-5 m-5 rounded-lg"
-          >
-            Start project
-          </button>
-        </div>
+      
 
-        {showDropdown && (
-          <div className="flex z-10 justify-center items-center px-3 p-5 my-5 text-lg">
-            <select className="bg-teal-200 rounded-md p-3 font-bold">
-              <option value="Select a Project">Select a Project</option>
-              {projects.map(project => (
-                <option key={project.id} value={project.name}>
-                  {project.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      <div className="container sm:w-full mb-5 py-4 mx-auto flex justify-between bg-white mt-5 rounded-sm">
-        <div className="flex justify-center items-center gap-4 sm:gap-1">
-          <svg className="w-4 h-4 text-gray-500" viewBox="0 0 20 20">
-            <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke="currentColor" strokeWidth="2" fill="none" />
-          </svg>
-          <input type="search" placeholder="Search" className="block w-full sm:w-1/2 outline outline-red-500" />
-        </div>
-
-        <div className="flex justify-center items-center pr-3 sm:pr-4 gap-4 sm:gap-2 uppercase text-sm text-center">
-          <h1 onClick={showCreateModal}>Add a new employee</h1>
-          <h1>Modify an employee</h1>
-        </div>
-      </div>
-
-      <CreateModal />
 
       <main className="border border-red-100 h-full">
+      <CreateModal />
         <div className="flex justify-center mx-auto w-full">
           {/* Placeholder for table: <TableData data={employees}/> */}
         </div>
@@ -126,10 +91,9 @@ const Home = () => {
                   id={emp.name}
                   name={emp.name}
                   email={emp.email}
-                  team={emp.team}
                   phone={emp.phone}
                   position={emp.position}
-                  department={emp.department}
+                  team={emp.team}
                   onClick={showModifyModal}
                 />
               ))

@@ -1,43 +1,54 @@
-import React from 'react'
-import logo from '../assets/react.svg'
-import { Link } from 'react-router-dom'
-import {motion }from 'framer-motion';
-import axios from 'axios';
-import { useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const username = user?.username || '';
 
-  useEffect(() => {
-    
-  })
-
-  const showCreateModal = () => {
-    const modal = document.getElementById('createModal');
-    modal.style.display = 'block';
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
+
   return (
-    <header className='min-w-screen flex items-center bg-[#0C1B33] py-2 sticky  h-[15vh]'>
+    <header className="w-full bg-[#0C1B33] flex items-center py-3 sticky top-0 z-50 shadow-md h-[15vh]">
+      <nav className="container mx-auto flex flex-wrap justify-between items-center px-4 text-white text-md font-semibold">
 
+        {/* Left: Navigation Links */}
+        <ul className="flex items-center space-x-6">
+          <li>
+            <Link to="/" className="hover:underline">Home</Link>
+          </li>
+          <li>
+            <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+          </li>
+        </ul>
 
-    
-<nav className='w-full font-bolder py-2 text-white text-md flex justify-around'>
-      <ul className='list-none flex justify-between items-center' >
-        
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/'}>Home</Link></li>
-        {/* <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/tasks'}>Tasks</Link></li> */}
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/dashboard'}>Dashboard</Link></li>
-</ul>
-     
+        {/* Right: User Actions */}
+        <ul className="flex items-center space-x-6 uppercase">
+          {localStorage.getItem('token') ? (
+            <>
+              <li className="text-indigo-200 font-bold">{username}</li>
+              {/* You can later add a profile link here */}
+              <li>
+                <button type='button' onClick={logout} className="hover:underline">Logout</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login" className="hover:underline">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:underline">Register</Link>
+              </li>
+            </>
+          )}
+        </ul>
 
-     <ul className='flex justify-between items-center' >
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/login'}>Login</Link></li>
-        <li className='block list-none text-md  font-bolder hover:underline  pl-4 '><Link to={'/signup'}>Register</Link></li>
-     </ul>
-  </nav>
-
-
-
+      </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

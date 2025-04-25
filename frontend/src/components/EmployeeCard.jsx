@@ -7,6 +7,7 @@ const EmployeeCard = (props) => {
     alert(e.target.id)
   }
   const [show, setShow] = useState(false)
+  console.log(props)
   return (
     
 
@@ -18,17 +19,17 @@ const EmployeeCard = (props) => {
   </div>
     <div className="px-4 pb-4">
     <p className="text-white text-base mb-2">
-      Email: <span className="font-medium">{props.emai}</span>
+      Email: <span className="font-medium">{props.email}</span>
+    </p>
+    <p className="text-white text-base mb-2">
+      Phone: <span className="font-medium">{props.phone}</span>
+    </p>
+    <p className="text-white text-base mb-2">
+      Position: <span className="font-medium">{props.position}</span>
     </p>
     </div>
   <div className="px-4 pb-4">
-    <p className="text-white text-base mb-2">
-      Department: <span className="font-medium">{props.department}</span>
-    </p>
-
-    <p className='text-white text-sm'>
-      <span className='font-bold '>Department: </span>{props.department}
-    </p>
+    
 <p className='text-white text-sm'>
       <span className='font-bold '>Team: </span>{props.team}
     </p>

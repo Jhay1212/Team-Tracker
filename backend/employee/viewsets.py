@@ -17,6 +17,8 @@ from django.contrib.auth import authenticate
 class AuthViewSet(viewsets.ViewSet):
     queryset = User.objects.none()
     serializers = UserSerializer
+    permision_classes = [AllowAny]
+    autenciation_classes = [TokenAuthentication, SessionAuthentication]
     @action (detail=False, methods=['post'], url_path='login')
     def login(self, request, *args, **kwargs):
         username = request.data.get('username', None)
@@ -25,7 +27,7 @@ class AuthViewSet(viewsets.ViewSet):
         if not username:
             return Response({'error': 'Please provide username.'}, status=400)
 
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username).first()
 
     
         if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
@@ -45,7 +47,7 @@ class AuthViewSet(viewsets.ViewSet):
         return Response({'message': 'Logged out successfully.'})
        
     @action(detail=False, methods=['post'], url_path='register')
-    def signup(self, request, *args, **kwargs):
+    def register(self, request, *args, **kwargs):
         username = request.data.get('username', None)
         email = request.data.get('email', None)
         password = request.data.get('password', None)

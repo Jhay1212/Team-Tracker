@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
     position = models.CharField(max_length=100)

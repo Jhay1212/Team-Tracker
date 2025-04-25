@@ -25,15 +25,23 @@ const Dashboard = () => {
 
     
   ]  
-  return (
-    <>
-    <div className='h-20 '>
-        <Navbar />
+  if (!localStorage.getItem('user').username === 'admin') {
+    return (
+      <div className='min-h-screen h-full '>
+    <Navbar />
+
+ 
         {/* on dashboard this will have table that will show all the employees and their task for the day and 
         seperate table for project details on the same day */}
-    </div>
 
-<main className='h-screen w-screen'>
+<main className='h-screen w-screen mt-20'>
+<div className="card w-1/4 h-1/4 bg-white px-auto text-center rounded-lg mx-3 mb-3">
+      <div className="card-body ">
+        <h5 className="card-title">Card title</h5>
+        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" className="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
   <section id="projectContainer" className='bg white w-full mx-auto border border-double border-white rounded-md'>
 
 
@@ -42,8 +50,21 @@ const Dashboard = () => {
   </section>
 
 </main>
-        </>
+        </div>
   )
 }
+else{
+  return (
+    <div className='w-full h-full'>
+
+    {/* <Navbar /> */}
+    <div className='flex justify-center items-center min-h-screen h-full '>
+        <h2 className="p-5 font-extraboldan text-center text-blue bg-white rounded-lg">
+          Admin Access Only
+        </h2>
+      </div>
+</div>    
+  )
+}}
 
 export default Dashboard
