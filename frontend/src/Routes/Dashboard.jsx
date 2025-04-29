@@ -59,7 +59,7 @@ else{
 
     {/* <Navbar /> */}
     <div className='flex justify-center items-center min-h-screen h-full '>
-        <h2 className="p-5 font-extraboldan text-center text-blue bg-white rounded-lg">
+        <h2 className="p-5 font-extraboldan text-center text-blue rounded text-white font-extrabold text-3xl  ">
           Admin Access Only
         </h2>
       </div>

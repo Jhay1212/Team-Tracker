@@ -14,7 +14,6 @@ const Home = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [timer, setTimer] = useState(0);
 
-  // Fetch Projects
   const fetchProjects = async () => {
     try {
       const res = await axios.get('http://localhost:8000/api/projects/');
@@ -61,10 +60,7 @@ const Home = () => {
     alert(empCard);
   };
 
-  const showCreateModal = () => {
-    const modal = document.getElementById('createModal');
-    if (modal) modal.style.display = 'block'; // Ideally use useRef or state
-  };
+ 
 
   console.log(employees);
   return (
@@ -77,9 +73,23 @@ const Home = () => {
 
 
       <main className="border border-red-100 h-full">
+        {/* <section className='flex flex-col gap-4 justify-between items-center  w-1/4  rounded-lg h-3/4 bg-white'>
+          <div className='flex flex-col gap-2'>
+            <h1 className='text-3xl font-bold'>Start a Task</h1>
+            <p className='text-gray-500'>Start a task for today</p>
+            <button className='bg-[#0C1B33] text-white p-2 rounded-md' onClick={handleStartProject}>Start Project</button>    
+          </div>
+          <div className='flex flex-col gap-2'>
+            <div id="filter" className='flex flex-col gap-2'>
+              <h2>Filter by</h2>
+              <label htmlFor="all">All</label>
+              <input type='radio' id='all' name='filter' value='all' className='text-black' />All
+            </div>
+          </div>
+
+        </section> */}
       <CreateModal />
         <div className="flex justify-center mx-auto w-full">
-          {/* Placeholder for table: <TableData data={employees}/> */}
         </div>
 
         <div className="flex wrapper items-center justify-center w-full">

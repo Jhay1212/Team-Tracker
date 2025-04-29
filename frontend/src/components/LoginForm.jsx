@@ -22,7 +22,7 @@ const handleSubmit = async (e) => {
       await axios.post('http://localhost:8000/api/auth/login/', updatedUser);
       alert('Login Successfully');
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      
+      // localStorage.setItem('isAdmin')
       return window.location.href = '/';
     }catch(err) {
       console.log(err);
@@ -30,7 +30,7 @@ const handleSubmit = async (e) => {
     }
 }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
+    <div className="min-h-screen flex items-center justify-center  px-4">
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
       <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">Login</h2>
       

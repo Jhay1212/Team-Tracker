@@ -1,18 +1,16 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers, viewsets, routers, generics
 from rest_framework .authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .serializers import EmployeeSerializer, TeamSerializer, ProjectSerializer, UserSerializer
-import bcrypt 
 from django.contrib.auth.models import User 
-
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate
+import bcrypt 
 from .models import Employee, Team
 from projects.models import Project
-from django.contrib.auth import authenticate
 
 class AuthViewSet(viewsets.ViewSet):
     queryset = User.objects.none()
@@ -23,20 +21,36 @@ class AuthViewSet(viewsets.ViewSet):
     def login(self, request, *args, **kwargs):
         username = request.data.get('username', None)
         password = request.data.get('password', None)
-
-        if not username:
-            return Response({'error': 'Please provide username.'}, status=400)
+        print(f"username: {username}, password: {password}")
 
         user = User.objects.filter(username=username).first()
+        if not user:
+            return Response({'error': 'Invalid username or password.'}, status=401)
 
-    
-        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        
+        if user.is_superuser and check_password(password, user.password):
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
                 'user_id': user.id,
                 'username': user.username,
+                'email': user.email,
+                'staff_status': user.is_superuser
+            })
+            
+
+     
+    
+        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        
+            token, created = Token.objects.get_or_create(user=user)
+            print(token.key, user.is_superuser)
+            return Response({
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'is_superuser': user.is_superuser,
+                'staff_status': user.is_staff
             })
         else:
             return Response({'error': 'Invalid username or passwordl.'}, status=401)
@@ -152,6 +166,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
             queryset = Project.objects.filter(employee_id=employee_id)
         return queryset
 
+   
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
