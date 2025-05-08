@@ -19,11 +19,13 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedUser = {...user };
     try {
-      await axios.post('http://localhost:8000/api/auth/login/', updatedUser);
+      const response = await axios.post('http://localhost:8000/api/auth/login/', updatedUser);
       alert('Login Successfully');
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      // localStorage.setItem('isAdmin')
-      return window.location.href = '/';
+      localStorage.setItem('user', response.data.user);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user_id', response.data.user_id);
+      localStorage.setItem('is_superuser', response.data.is_superuser);
+      
     }catch(err) {
       console.log(err);
       alert(err.message )

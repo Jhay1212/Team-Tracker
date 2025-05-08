@@ -11,6 +11,15 @@ from django.contrib.auth import authenticate
 import bcrypt 
 from .models import Employee, Team
 from projects.models import Project
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFilter, CharFilter
+
+class EmployeeFilter(FilterSet):
+    name = CharFilter(field_name='name', lookup_expr='icontains')
+    email = CharFilter(field_name='email', lookup_expr='icontains')
+    date_now = DateFilter(field_name='date_joined', lookup_expr='year')
+    class Meta:
+        model = Employee
+        fields = ['name', 'email', 'date_now']
 
 class AuthViewSet(viewsets.ViewSet):
     queryset = User.objects.none()
@@ -26,26 +35,14 @@ class AuthViewSet(viewsets.ViewSet):
         user = User.objects.filter(username=username).first()
         if not user:
             return Response({'error': 'Invalid username or password.'}, status=401)
-
-        if user.is_superuser and check_password(password, user.password):
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({
-                'token': token.key,
-                'user_id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'staff_status': user.is_superuser
-            })
-            
-
      
     
-        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        if check_password(password, user.password):
         
             token, created = Token.objects.get_or_create(user=user)
-            print(token.key, user.is_superuser)
             return Response({
                 'token': token.key,
+                'user': user,
                 'user_id': user.id,
                 'username': user.username,
                 'email': user.email,
@@ -53,7 +50,8 @@ class AuthViewSet(viewsets.ViewSet):
                 'staff_status': user.is_staff
             })
         else:
-            return Response({'error': 'Invalid username or passwordl.'}, status=401)
+            return Response({'error': 'Invalid username or password.'}, status=401)     
+
         
 
     def logout(self, request, *args, **kwargs):
@@ -65,12 +63,11 @@ class AuthViewSet(viewsets.ViewSet):
         username = request.data.get('username', None)
         email = request.data.get('email', None)
         password = request.data.get('password', None)
-        password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-        # if User.objects.get(username=username):
-        #     return Response({'message': 'User already exists.'}, status=400)
+        if User.objects.filter(username=username).exists():
+            return Response({'message': 'User already exists.'}, status=400)
         
-        user = User.objects.create(username=username , email=email, password=password)
+        user = User.objects.create_user(username=username , email=email, password=password)
         user.save()
         return Response({'message': 'User created successfully.'}, status=201)
 
@@ -166,21 +163,31 @@ class ProjectViewSet(viewsets.ModelViewSet):
             queryset = Project.objects.filter(employee_id=employee_id)
         return queryset
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=201)
+
    
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=201)
     
 
     
     def get_queryset(self):
-        queryset = Employee.objects.all()
-        employee_id = self.request.query_params.get('employee_id', None)
-        if employee_id is not None:
-            queryset = Employee.objects.filter(id=employee_id)
+        queryset = User.objects.all()
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            queryset = User.objects.filter(username=username)
         return queryset
 
 

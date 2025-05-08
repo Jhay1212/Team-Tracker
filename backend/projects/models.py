@@ -10,8 +10,8 @@ class Project(models.Model):
         NOT_STARTED = 'Not Started'
 
 
-    name = models.CharField(max_length=100)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)     
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='projects')
     description = models.TextField()
     status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.NOT_STARTED)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isModalHidden, setIsModalHidden] = useState(true);
   const user = JSON.parse(localStorage.getItem('user'));
   const username = user?.username || '';
+  const user_id = parseInt(localStorage.getItem('user_id')) || parseInt(user?.id) || '';
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -46,7 +47,9 @@ const Navbar = () => {
         <ul className="flex items-center space-x-6 uppercase">
           {localStorage.getItem('user') ? (
             <>
-              <li className="text-indigo-200 font-bold">{username}</li>
+              <li className="text-indigo-200 font-bold">
+                <Link to={`/employee/${user_id}`} className="hover:underline">
+                {username}</Link></li>
               <li className="text-indigo-200 font-bold">
                 <button onClick={toggleModal} className="hover:underline">
                 Edit Employee Profile

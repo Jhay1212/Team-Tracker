@@ -3,8 +3,7 @@ import axios from 'axios';
 import EmployeeCard from '../components/EmployeeCard';
 import Navbar from '../components/Navbar';
 import CreateModal from '../components/CreateModal';
-import ModifyEmployee from '../components/ModifyEmployee'; // Placeholder
-import TableData from '../components/TableData'; // Placeholder
+import TaskModal from '../components/TaskModal';
 
 const Home = () => {
   const [user, setUser] = useState({});
@@ -72,7 +71,8 @@ const Home = () => {
       
 
 
-      <main className="border border-red-100 h-full">
+      <main className="border border-red-100 h-full flex justify-evenly">
+        <TaskModal projects={projects} isVisible={true} />
         {/* <section className='flex flex-col gap-4 justify-between items-center  w-1/4  rounded-lg h-3/4 bg-white'>
           <div className='flex flex-col gap-2'>
             <h1 className='text-3xl font-bold'>Start a Task</h1>
@@ -89,8 +89,7 @@ const Home = () => {
 
         </section> */}
       <CreateModal />
-        <div className="flex justify-center mx-auto w-full">
-        </div>
+
 
         <div className="flex wrapper items-center justify-center w-full">
           <div className="grid grid-cols-3 mx-auto w-3/4">

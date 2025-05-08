@@ -1,31 +1,16 @@
-import React from 'react'
+import {useEffect, useState} from 'react'
 import Navbar from '../components/Navbar'
-import LoginForm from '../components/LoginForm'
-import TableData from '../components/TableData';
-
+import LoginForm from '../components/LoginForm.jsx'
+import EmployeeTable from '../components/Dashboard/EmployeeTable.jsx'
+import ProjectsTable from '../components/Dashboard/ProjectsTable.jsx'
+import axios from 'axios';
 const Dashboard = () => {
-  const sampleData  = [
-    {
-      name: "Project Name",
-      description: "Project Description",
-    },
-    
-    {
-      name: "Project Name2",
-      description: "Project Description2",
-    },
-    {
-      name: "Project Name3",
-      description: "Project Description3",
-    },
-    {
-      name: "Project Name4",
-      description: "Project Description4",
-    },
+  const is_superuser = localStorage.getItem('is_superuser');
 
-    
-  ]  
-  if (!localStorage.getItem('user').username === 'admin') {
+
+  
+
+  if (is_superuser) {
     return (
       <div className='min-h-screen h-full '>
     <Navbar />
@@ -35,18 +20,32 @@ const Dashboard = () => {
         seperate table for project details on the same day */}
 
 <main className='h-screen w-screen mt-20'>
-<div className="card w-1/4 h-1/4 bg-white px-auto text-center rounded-lg mx-3 mb-3">
-      <div className="card-body ">
-        <h5 className="card-title">Card title</h5>
-        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
+  <div className="flex justify-evenly">
+  <div className="card w-1/4 h-1/4 bg-white px-auto text-center rounded-lg mx-3 mb-3">
+        <div className="card-body ">
+          <h5 className="card-title bold pb-4">Number of Employees Working </h5>
+          <h2 className='text-3xl'>{employees.length}</h2>
+          <a href="#" className="btn btn-primary">Go somewhere</a>
+        </div>
       </div>
-    </div>
+
+      <div className="card w-1/4 h-1/4 bg-white px-auto text-center rounded-lg mx-3 mb-3">
+        <div className="card-body">
+          <h5 className="card-title bold pb-4">Number of Projects</h5>
+          <h2 className='text-3xl'>{projects.length}</h2>
+          <a href="#" className="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+  </div>
+
+     
+    
   <section id="projectContainer" className='bg white w-full mx-auto border border-double border-white rounded-md'>
 
 
   <h2>Project</h2>
-<TableData data={sampleData} />
+{/* <TableData data={projects} /> */}
+<ProjectsTable />
   </section>
 
 </main>

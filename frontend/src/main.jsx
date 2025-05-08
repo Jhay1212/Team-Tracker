@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './Routes/Home.jsx';
-import Employee from './components/Employee.jsx';
+import Employee from './Routes/Employee.jsx';
 import Dashboard from './Routes/Dashboard.jsx';
 import Login from './Routes/Login.jsx';
 import Register from './Routes/Register.jsx';
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
  {
   path: '/signup',
   element: <Register/>  
+ },
+ {
+  path: '/employee/:id',
+  element: <Employee/>
  }
  
 ])
