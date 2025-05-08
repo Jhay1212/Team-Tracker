@@ -30,7 +30,6 @@ class AuthViewSet(viewsets.ViewSet):
     def login(self, request, *args, **kwargs):
         username = request.data.get('username', None)
         password = request.data.get('password', None)
-        print(f"username: {username}, password: {password}")
 
         user = User.objects.filter(username=username).first()
         if not user:
@@ -42,7 +41,6 @@ class AuthViewSet(viewsets.ViewSet):
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
-                'user': user,
                 'user_id': user.id,
                 'username': user.username,
                 'email': user.email,

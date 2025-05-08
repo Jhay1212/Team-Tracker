@@ -123,9 +123,9 @@ const TaskModal = ({projects, isVisible, onClose, onTaskCreated}) => {
     if (!isVisible) return null;
       
     return (
-        <div className="wrapper">
+        <div className="wrapper hidden">
 
-        <div className="   inset-0 g-opacity-50 z-50">
+        <div className=" fixed  inset-0 g-opacity-50 z-50">
             <div className="bg-white w-1/4 rounded border shadow-lg p-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">Create New Project</h2>

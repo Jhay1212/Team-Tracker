@@ -21,7 +21,7 @@ const handleSubmit = async (e) => {
     try {
       const response = await axios.post('http://localhost:8000/api/auth/login/', updatedUser);
       alert('Login Successfully');
-      localStorage.setItem('user', response.data.user);
+      localStorage.setItem('username', response.data.username );
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user_id', response.data.user_id);
       localStorage.setItem('is_superuser', response.data.is_superuser);
